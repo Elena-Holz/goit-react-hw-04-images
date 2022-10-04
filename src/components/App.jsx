@@ -127,7 +127,8 @@ function App() {
   const [error, setError] = useState(null);
   const [searchName, setSearchName] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [totalHits, setTotalHits] = useState('');
+  const [isPictury, setIsPictury] = useState(false);
+  const [showBtn, setshowBtn] = useState(false);
   const [largeImageURL, setLargeImageURL] = useState('');
  
   useEffect(() => {
@@ -137,20 +138,20 @@ function App() {
       try {
         const data = await getPicturies(page, searchName);
         const newPicturies = data.hits;
-        const totalHits = data.totalHits;
         setPicturies((picturies) => [...picturies, ...newPicturies]);
-        setTotalHits(totalHits);
-   
+        setshowBtn(() => page < Math.ceil(data.totalHits / 12));
+         setIsPictury(() => newPicturies.length > 0);
+        
       } catch (error) {
         setError(error);
       } finally {
         setLoading(false);
       }
     }
-    if (!searchName) {
-      return console.log('Without');
+    if (searchName) {
+      fetchPicturies();
     }
-    fetchPicturies();
+    
   }, [ page, searchName])
       
 
@@ -158,11 +159,6 @@ function App() {
     setPage((prevPage) => prevPage + 1);
   }
   
-
-  const isPictury = Boolean(picturies.length);
-  const totalPage = Math.ceil(totalHits / 12);
-  
-
   const onSearch = (searchName) => {
     setSearchName(searchName);
     setPicturies([]);
@@ -188,7 +184,7 @@ function App() {
       {loading && <Loader />}
       {error && <p>Будь ласка спробуйте ще раз...</p>}
       {isPictury && <ImageGallery picturies={picturies} openModal={openModal} />}
-      {isPictury && totalPage !== page && <Button loadMore={loadMore} text='Load more' />}
+      {isPictury && showBtn && <Button loadMore={loadMore} text='Load more' />}
     </div>
   );
 }

@@ -9,7 +9,12 @@ export default function Modal({ onClose, children }) {
   
   useEffect(() => {
     document.addEventListener("keydown", closeModal);
-})
+
+    return () => {
+      document.removeEventListener("keydown", closeModal);
+    };
+  });
+
 
   const closeModal = ({ target, currentTarget, code }) => {
     if (target === currentTarget || code === "Escape") {
