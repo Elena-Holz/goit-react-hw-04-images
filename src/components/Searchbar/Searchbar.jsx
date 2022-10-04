@@ -8,30 +8,20 @@ export default function Searchbar({onChange}) {
    
 
     const handleChange = (e) => {
-        console.log(e.target.value)
         return setSearchName(e.target.value.trim().toLowerCase());
     }
 
 
      const handleSubmit = (e) => {
          e.preventDefault();
-         console.log(searchName);
         if (searchName.trim() === '') {
             alert('Enter request name')
             return;
         }
        setSearchName(searchName) 
        onChange(searchName)
-         console.log(searchName);
         setSearchName("");
     }
-
-    // const reset =() => {
-    //     setSearchName((searchName) => searchName = "");
-    // }
-   
-    // const { handleSubmit, handleChange } = this;
-
 
 
         return (
@@ -53,8 +43,6 @@ export default function Searchbar({onChange}) {
 </header>
         
     )
-
-
 }
 
 Searchbar.propTypes = {

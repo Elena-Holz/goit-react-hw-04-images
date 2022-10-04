@@ -131,18 +131,13 @@ function App() {
   const [largeImageURL, setLargeImageURL] = useState('');
  
   useEffect(() => {
-    console.log('First render');
     const fetchPicturies = async () => {
-      console.log(page)
       setLoading(true);
       
       try {
         const data = await getPicturies(page, searchName);
-        console.log(data);
-        console.log(searchName);
         const newPicturies = data.hits;
         const totalHits = data.totalHits;
-        console.log(totalHits);
         setPicturies((picturies) => [...picturies, ...newPicturies]);
         setTotalHits(totalHits);
    
@@ -158,8 +153,6 @@ function App() {
     fetchPicturies();
   }, [ page, searchName])
       
-
-
 
   const loadMore = () => {
     setPage((prevPage) => prevPage + 1);
@@ -179,7 +172,6 @@ function App() {
    const openModal = (largeImageURL) => {
      setShowModal(true);
      setLargeImageURL(largeImageURL);
-      console.log(largeImageURL);
   }
 
     const closeModal = () => {
@@ -203,36 +195,3 @@ function App() {
 
 export default App;
   
-
-// useEffect(() => {
-//     const fetchPicturies = async () => {
-//       console.log(page)
-//       setLoading(true);
-     
-      
-//       // if (prevsearchName !== searchName || prevpage !== page) {
-//       //   setLoading(true);
-//       // }
-//       // };
-    
-//       const response = getPicturies(page, searchName)
-//           console.log(response)
-//         .then(response => {
-//           if (picturies) {
-//             setLoading(false);
-//             setPicturies(picturies => [...picturies, ...response.hits]);
-//             return;
-//           }
-//           setPicturies(response.hits);
-//           setLoading(false);
-//         })
-//         .catch(error => {
-//           setError(error);
-//           setLoading(false)
-//         })
-//       return response;
-//     }
-//     if (searchName) {
-//       fetchPicturies()
-//     }
-//       }, [searchName, page]);
