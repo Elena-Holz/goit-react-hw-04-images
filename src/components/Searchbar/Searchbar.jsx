@@ -1,40 +1,42 @@
-import { Component } from "react";
+import {useState } from "react";
 import css from 'components/Searchbar/Searchbar.module.css';
 import PropTypes from 'prop-types';
 
 
-export default class Searchbar extends Component {
-    state = {
-        searchName: ''
-    };
-
-handleChange = (e) => {
-    this.setState({ searchName: e.currentTarget.value.toLowerCase() })
+export default function Searchbar({onChange}) {
+    const [searchName, setSearchName] = useState('');
    
+
+    const handleChange = (e) => {
+        console.log(e.target.value)
+        return setSearchName(e.target.value.trim().toLowerCase());
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        if (this.state.searchName.trim() === '') {
+
+     const handleSubmit = (e) => {
+         e.preventDefault();
+         console.log(searchName);
+        if (searchName.trim() === '') {
             alert('Enter request name')
             return;
         }
-        this.props.onSubmit(this.state.searchName)
-        this.reset();
+       setSearchName(searchName) 
+       onChange(searchName)
+         console.log(searchName);
+        setSearchName("");
     }
 
-    reset() {
-        this.setState({
-            searchName: ""
-        })
-    }
+    // const reset =() => {
+    //     setSearchName((searchName) => searchName = "");
+    // }
+   
+    // const { handleSubmit, handleChange } = this;
 
-render() {
-    const { searchName } = this.state;
-    const { handleSubmit, handleChange } = this;
-    return (
+
+
+        return (
         <header className={css.searchBar}>
-  <form className={css.searchForm} onSubmit={handleSubmit}>
+  <form className={css.searchForm} onSubmit={handleChange}>
     <button type="submit" className={css.searchButton} onClick={handleSubmit}>
       <span className={css.searchButton_label}>Search</span>
     </button>
@@ -51,7 +53,8 @@ render() {
 </header>
         
     )
-}
+
+
 }
 
 Searchbar.propTypes = {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function ImageGalleryItem({ openModal, key, largeImageURL, webformatURL }) {
 
-        return <li className={css.ImageGalleryItem} onClick={() => openModal({largeImageURL})} key={key}>
+        return <li className={css.ImageGalleryItem} onClick={() => openModal(largeImageURL)} key={key}>
            
             <img className={css.ImageGalleryItem_image} src={webformatURL} alt={largeImageURL} />
 
@@ -20,3 +20,6 @@ ImageGalleryItem.propTypes = {
     largeImageURL: PropTypes.string.isRequired,
     webformatURL: PropTypes.string.isRequired,
 }
+
+
+//   
